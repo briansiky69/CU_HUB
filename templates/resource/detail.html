@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ resource.name }}{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <h1 class="mb-3">{{ resource.name }}</h1>
+        <p class="lead">{{ resource.description }}</p>
+        <p><strong>Category:</strong> {{ resource.category }}</p>
+      </div>
+      <div class="col-md-4">
+        <img src="{{ resource.image.url }}" alt="{{ resource.name }}" class="img-fluid">
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <h2>Related Events</h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Date</th>
+          <th>Location</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for event in resource.events.all %}
+          <tr>
+            <td><a href="{% url 'event_detail' event.id %}">{{ event.name }}</a></td>
+            <td>{{ event.date }}</td>
+            <td>{{ event.location }}</td>
+          </tr>
+        {% empty %}
+          <tr>
+            <td colspan="3">No related events found.</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

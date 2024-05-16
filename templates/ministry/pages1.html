@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ ministry.name }} - Ministry{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <h1>{{ ministry.name }}</h1>
+        <p>{{ ministry.description }}</p>
+        <h2>Events</h2>
+        {% for event in events %}
+          <div class="card my-3">
+            <div class="card-body">
+              <h5 class="card-title">{{ event.name }}</h5>
+              <p class="card-text"><small class="text-muted">{{ event.start_time|date:"F d, Y" }} - {{ event.end_time|date:"F d, Y" }}</small></p>
+              <p class="card-text">{{ event.description }}</p>
+              <a href="{% url 'event_detail' event.id %}" class="btn btn-primary">Learn more</a>
+            </div>
+          </div>
+        {% empty %}
+          <p>No events yet.</p>
+        {% endfor %}
+      </div>
+      <div class="col-md-4">
+        <h2>Upcoming Events</h2>
+        <ul class="list-unstyled">
+          {% for event in upcoming_events %}
+            <li>{{ event.name }} - {{ event.start_time|date:"M d" }}</li>
+          {% empty %}
+            <li>No upcoming events.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+  </div>
+{% endblock %}

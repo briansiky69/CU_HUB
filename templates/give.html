@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid p-0">
+  <!-- Background image with overlay -->
+  <div class="welcome-image" style="background-image: url('static/img/welcome.png.jpg'); height: 100vh;">
+    <!-- Overlay with semi-transparent background -->
+    <div class="overlay"></div>
+    <!-- Text content -->
+    <div class="text-overlay text-center text-white">
+      <h1 class="display-3">Give Today</h1>
+      <blockquote class="mb-4">
+        <p class="lead">You shall generously give to him, and your heart shall not be grieved when you give to him, because for this thing the Lord your God will bless you in all your work and in all your undertakings</p>
+        <footer class="text-muted">Deuteronomy 15:10</footer>
+      </blockquote>
+      <p class="lead">Your generous gift will help us continue our mission to reaching out..</p>
+    </div>
+  </div>
+</div>
+<section>
+  <div class="giving-container">   <h2 class="text-center mb-5">Giving Options</h2>
+<div class="giving-options-container">
+    <div class="giving-option">
+      <img src="/static/img/mpesa.jpeg" alt="Car 1" />
+      <h3>Paybill Deposit</h3>
+      <p>
+        You can make a bank transfer to our account using the following
+        details:
+      </p>
+      <ul>
+        <li><strong>Bank Name:</strong> Equity Bank</li>
+        <li><strong>Paybill Number:</strong> 247247</li>
+        <li><strong>Account Number:</strong> 962558 or 0114772363</li>
+      </ul>
+    </div>
+    <div class="giving-option">
+      <img src="/static/img/equity.png" alt="Car 2" />
+      <h3>Bank Transfer</h3>
+      <p>
+        You can make a bank transfer to our account using the following
+        details:
+      </p>
+      <ul>
+        <li><strong>Bank Name:</strong> Equity Bank</li>
+        <li><strong>Branch:</strong> Moi Avenue</li>
+        <li><strong>Account Number:</strong> 047028232549</li>
+      </ul>
+    </div>
+  </div>
+
+<!-- <div class="container my-5">
+  <h2 class="text-center mb-5">Online Giving</h2>
+  <p class="text-center mb-5">For your convenience, we also offer online giving. Please click the button below to donate online:</p>
+  <div class="text-center">
+    <a href="" class="btn btn-primary btn-lg">Donate Online</a>
+  </div>
+</div> -->
+<div class="container my-5">
+  <h2 class="text-center mb-5">Other Ways to Give</h2>
+
+  <div class="row">
+    <div class="col-md-4 d-flex flex-fill align-items-stretch">
+      <div class="giving-option">
+        <img src="/static/img/giveinperson.png" alt="Give in person" />
+        <h3>Give In Person</h3>
+        <p>Visit us during our weekend services to make a gift in person.</p>
+      </div>
+    </div>
+    <div class="col-md-4 d-flex flex-fill align-items-stretch">
+      <div class="giving-option">
+        <img src="/static/img/mailgift.jpeg" alt="Mail a gift" />
+        <h3>Mail a Gift</h3>
+        <p>
+          Send your check to: <br />
+          Kenya Science Christian Union<br />
+          ksccu40@gmail.com<br />
+          
+        </p>
+
+      </div>
+    </div>
+    <div class="col-md-4 d-flex flex-fill align-items-stretch">
+      <div class="giving-option">
+        <img src="/static/img/speakerdonation.jpeg" alt="Donate Assets" />
+        <h3>Donate Assets</h3>
+        <p>
+          Consider donating Speakers, microphones, or other relevant assets. Please contact us for details.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% include 'footer.html' %}
+{% endblock %}
+{% include 'footer.html' %}

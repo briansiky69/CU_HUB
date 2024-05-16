@@ -1,0 +1,12 @@
+<div class="col-md-4">
+    <h2>Latest Discussions</h2>
+    {% for discussion in discussions %}
+      <div class="discussion">
+        <h3>{{ discussion.title }}</h3>
+        <p>{{ discussion.content|truncatewords:30 }}</p>
+        <p><a href="">Read more</a></p>
+      </div>
+    {% empty %}
+      <p>No discussions found.</p>
+    {% endfor %}
+  </div>

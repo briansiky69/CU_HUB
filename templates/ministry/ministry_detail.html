@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="ministry-detail">
+    <h1>{{ ministry.name }}</h1>
+    {% if ministry.image %}
+      <img src="{{ ministry.image.url }}" alt="{{ ministry.name }} image">
+    {% endif %}
+    <p>{{ ministry.short_message }}</p>
+    <h2>Leader</h2>
+    <p>Name: {{ leader_name }}</p>
+    <p>Email: {{ ministry.leader_email }}</p>
+    <p>Phone: {{ ministry.leader_phone }}</p>
+    <p>Address: {{ ministry.leader_address }}</p>
+  </div>
+{% endblock %}

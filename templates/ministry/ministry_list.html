@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Ministries</h1>
+  <ul>
+    {% for ministry in ministries %}
+      <li><a href="{% url 'event_resources:ministry_detail' ministry.id %}">{{ ministry.name }}</a></li>
+    {% empty %}
+      <li>No ministries found.</li>
+    {% endfor %}
+  </ul>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Discussion Forums{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <h1>Discussion Forums</h1>
+
+        {% if ministry %}
+          <h2>Ministry: {{ ministry.name }}</h2>
+        {% endif %}
+
+        <ul class="list-unstyled">
+          {% for forum in forums %}
+            <li><a href="{% url 'forum_detail' forum.id %}">{{ forum.name }}</a></li>
+          {% empty %}
+            <li>No forums found.</li>
+          {% endfor %}
+        </ul>
+
+        {% if ministry %}
+          <p><a href="{% url 'ministry_pages' ministry.id %}" class="btn btn-primary">Back to {{ ministry.name }} ministry page</a></p>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

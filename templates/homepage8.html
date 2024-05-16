@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <!-- Add Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <!-- Add custom CSS -->
+  {% load static %}
+  
+</head>
+<body>
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{% static '/static/img/logo.png' %}">Logo</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="{% url 'event_resources:homepage' %}">Home</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Resources
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item" href="#">Downloads</a>
+            <a class="dropdown-item" href="#">Blogs</a>
+            <a class="dropdown-item" href="#">Discussions</a>
+            <a class="dropdown-item" href="#">Gallery</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="{% url 'event_resources:events_list' %}">Events</a>
+        </li>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Ministries</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Give</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Contact</a>
+        </li>
+      {% if user.is_authenticated %}
+          <li class="nav-item">
+              <a class="nav-link" href="">Profile</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="">Logout</a>
+          </li>
+      {% else %}
+          <li class="nav-item">
+              <a class="nav-link" href=""></a>Login</a>
+          </li>
+          <li class="nav-item">
+              <a class="nav-link" href="">Sign up</a>
+          </li>
+      {% endif %}
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Welcome Screen -->
+  <div class="welcome-screen" style="background-image: url('{% static '/static/img/logo.png' %});">
+    <div class="container">
+      <h1>Welcome to Our Church</h1>
+      <p>Join us and become part of our community.</p>
+      <button type="button" class="btn btn-primary">Learn More</button>
+      <button type="button" class="btn btn-secondary">Join Us</button>
+    </div>
+  </div>
+
+  <!-- Upcoming Events -->
+  <div class="upcoming-events">
+    <div class="container">
+      <h2>Upcoming Events</h2>
+      <div class="row">
+        <div class="col-md-4">
+          <div class="card">
+            <img src="https://images.pexels.com/photos/1666816/pexels-photo-1666816.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top" alt="Event 1">
+            <div class="card-body">
+              <h5 class="card-title">Event 1</h5>
+              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut velit mauris, rhoncus id luctus eget, sagittis at tellus.</p>
+              <p class="card-text"><small class="text-muted">Date: 2023-03-01</small></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+         <div class="card">
+            <img src="https://images.pexels.com/photos/1666816/pexels-photo-1666816.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top" alt="Event 2">
+            <div class="card-body">
+              <h5 class="card-title">Event 2</h5>
+              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut velit mauris, rhoncus id luctus eget, sagittis at tellus.</p>
+              <p class="card-text"><small class="text-muted">Date: 2023-03-08</small></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card">
+            <img src="https://images.pexels.com/photos/1666816/pexels-photo-1666816.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top" alt="Event 3">
+            <div class="card-body">
+              <h5 class="card-title">Event 3</h5>
+              <p class="card-text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut velit mauris, rhoncus id luctus eget, sagittis at tellus.</p>
+              <p class="card-text"><small class="text-muted">Date: 2023-03-15</small></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sermons -->
+  <div class="sermons">
+    <div class="container">
+      <h2>Sermons</h2>
+      <div class="row">
+        <div class="col-md-6">
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/zpOULjyy-n8" allowfullscreen></iframe>
+          </div>
+          <h3>Sermon Title</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut velit mauris, rhoncus id luctus eget, sagittis at tellus.</p>
+        </div>
+        <div class="col-md-6">
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/zpOULjyy-n8" allowfullscreen></iframe>
+          </div>
+          <h3>Sermon Title</h3>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut velit mauris, rhoncus id luctus eget, sagittis at tellus.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <p>&copy; 2023 Our Church</p>
+        </div>
+        <div class="col-md-6">
+          <ul class="list-inline">
+            <li class="list-inline-item">
+              <a href="#" class="text-muted"><i class="fab fa-facebook-f"></i></a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#" class="text-muted"><i class="fab fa-twitter"></i></a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#" class="text-muted"><i class="fab fa-instagram"></i></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Add Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <!-- Add custom JS -->
+ 
+</body>
+</html>

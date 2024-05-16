@@ -1,0 +1,300 @@
+{% extends 'base.html' %}
+
+{% block content %}
+  <div class="container-fluid p-0">
+    <div class="container-fluid p-0">
+      <div class="col-12 position-relative">
+        
+        <div class="welcome-image" style="background-image: url('static/img/welcome.png.jpg'); height: 100vh;">
+          
+          <div class="overlay"></div>
+          
+          <div class="text-overlay text-center text-white">
+            <h1>Welcome to Our Church</h1>
+            <p>Join us and become part of our community.</p>
+            <button type="button" class="btn btn-primary">Learn More</button>
+            <button type="button" class="btn btn-secondary">Join Us</button>
+          </div>
+        </div>
+      </div>
+      <style> @keyframes slide { 0% { left: -100%; } 100% { left: 100%; } } </style> 
+      <div class="container-fluid p-0">
+      <div class="container-fluid p-0"> 
+        <div class="container-fluid"> 
+          <div class="col-12 position-relative"> 
+            <!-- Background image with overlay --> 
+            <div class="welcome-image" style="height: 100vh; overflow: hidden;"> 
+              <!-- Overlay with semi-transparent background --> 
+              <div class="overlay">
+
+              </div> 
+              <!-- Text content --> 
+              <div class="text-overlay position-absolute bottom-0 start-0 end-0 bg-dark opacity-50 text-white p-3"> 
+                <h1>Welcome to Our Christian Union Campus Hub</h1> 
+                <p>Join us and become part of our community.</p> 
+                <button type="button" class="btn btn-primary">Learn More</button> 
+                <button type="button" class="btn btn-secondary">Join Us</button> 
+              </div> <!-- Changing background image --> 
+              <div class="image-slider"> 
+                <img src="static/img/give.jpeg" alt="Worship Image 1" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; animation: slide 12s infinite;"> 
+                <img src="https://images.pexels.com/photos/169647/pexels-photo-169647.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Worship Image 2" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; animation: slide 12s infinite; animation-delay: 4s;"> 
+                <img src="https://images.pexels.com/photos/1666816/pexels-photo-1666816.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Worship Image 1" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; animation: slide 12s infinite;"> 
+              </div> 
+            </div> 
+          </div> 
+        </div> 
+      </div>
+
+    </div>
+    <section class="hero-section" id="section_1">
+      <div class="section-overlay"></div>
+
+      <div class="container d-flex justify-content-center align-items-center">
+          <div class="row">
+
+              <div class="col-12 mt-auto mb-5 text-center">
+                  <small>Festava Live Presents</small>
+
+                  <h1 class="text-white mb-5">Night Live 2023</h1>
+
+                  <a class="btn custom-btn smoothscroll" href="#section_2">Let's begin</a>
+              </div>
+
+              <div class="col-lg-12 col-12 mt-auto d-flex flex-column flex-lg-row text-center">
+                  <div class="date-wrap">
+                      <h5 class="text-white">
+                          <i class="custom-icon bi-clock me-2"></i>
+                          10 - 12<sup>th</sup>, Dec 2023
+                      </h5>
+                  </div>
+
+                  <div class="location-wrap mx-auto py-3 py-lg-0">
+                      <h5 class="text-white">
+                          <i class="custom-icon bi-geo-alt me-2"></i>
+                          National Center, United States
+                      </h5>
+                  </div>
+
+                  <div class="social-share">
+                      <ul class="social-icon d-flex align-items-center justify-content-center">
+                          <span class="text-white me-3">Share:</span>
+
+                          <li class="social-icon-item">
+                              <a href="#" class="social-icon-link">
+                                  <span class="bi-facebook"></span>
+                              </a>
+                          </li>
+
+                          <li class="social-icon-item">
+                              <a href="#" class="social-icon-link">
+                                  <span class="bi-twitter"></span>
+                              </a>
+                          </li>
+
+                          <li class="social-icon-item">
+                              <a href="#" class="social-icon-link">
+                                  <span class="bi-instagram"></span>
+                              </a>
+                          </li>
+                      </ul>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+      <div class="video-wrap">
+          <video autoplay="" loop="" muted="" class="custom-video" poster="">
+              <source src="video/pexels-2022395.mp4" type="video/mp4">
+
+              Your browser does not support the video tag.
+          </video>
+      </div>
+  </section>
+    <!-- upcoming events section -->
+      <section>
+      <h2>Upcoming Events</h2>
+      <div class="row">
+          {% for event in events %}
+          <div class="col-md-4 event-col"> 
+              <div class="card mb-4">
+                  <img src="/static/img/welcome.png.JPG" class="card-img-top" alt="{{ event.name }}">
+                  <div class="card-body">
+                      <h5 class="card-title">{{ event.name }}</h5>
+                      <p class="card-text">{{ event.start_time|date:"F d, Y" }} - {{ event.end_time|date:"F d, Y" }}</p>
+                      <p class="card-text">{{ event.description }}</p>
+                      <a href="" class="btn btn-primary">Learn more</a>
+                  </div>
+              </div>
+          </div>
+          {% empty %}
+          <p>No events found.</p>
+          {% endfor %}
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+              {% if events.has_previous %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ events.previous_page_number }}" tabindex="-1" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                  </a>
+                </li>
+              {% endif %}
+              {% for i in events.paginator.page_range %}
+                {% if events.number == i %}
+                  <li class="page-item active">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                  </li>
+                {% elif i > events.number|add:-3 and i < events.number|add:3 %}
+                  <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+              {% endfor %}
+              {% if events.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ events.next_page_number }}">
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                  </a>
+                </li>
+              {% endif %}
+            </ul>
+          </nav>
+        </div>
+      </div>
+      </section>
+      <section>
+        <h2>Upcoming Sermons</h2>
+        <div class="row">
+          {% for sermon in sermons %}
+            <div class="col-md-4 sermon-col">
+              <div class="card mb-4">
+                {% if sermon.image %}
+                  <img src="{{ sermon.image.url }}" class="card-img-top" alt="{{ sermon.title }}">
+                {% else %}
+                  <img src="/static/img/default-sermon-image.jpg" class="card-img-top" alt="{{ sermon.title }}">
+                {% endif %}
+                <div class="card-body">
+                  <h5 class="card-title">{{ sermon.title }}</h5>
+                  <p class="card-text"><strong>Speaker:</strong> {{ sermon.speaker }}</p>
+                  <p class="card-text"><strong>Date:</strong> {{ sermon.date|date:"F d, Y" }}</p>
+                  <p class="card-text">{{ sermon.description|truncatewords:20 }}</p>
+                  {% if sermon.video_link %}
+                    <div class="embed-responsive embed-responsive-16by9">
+                      <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/{{ sermon.video_link }}" allowfullscreen></iframe>
+                    </div>
+                  {% endif %}
+                  <a href="#" class="btn btn-primary">Learn more</a>
+                </div>
+              </div>
+            </div>
+            {% empty %}
+            <p>No sermons found.</p>{% endfor %}
+        </div>
+        {% if sermons.paginator.num_pages > 1 %}
+          <div class="row">
+            <div class="col-12">
+              <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                  {% if sermons.has_previous %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ sermons.previous_page_number }}" tabindex="-1" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                  {% for i in sermons.paginator.page_range %}
+                    {% if sermons.number == i %}
+                      <li class="page-item active">
+                        <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                      </li>
+                    {% elif i > sermons.number|add:-3 and i < sermons.number|add:3 %}
+                      <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                  {% endfor %}
+                  {% if sermons.has_next %}
+                    <li class="page-item">
+                      <a class="page-link" href="?page={{ sermons.next_page_number }}">
+                        <span aria-hidden="true">&raquo;</span>
+                        <span class="sr-only">Next</span>
+                      </a>
+                    </li>
+                  {% endif %}
+                </ul>
+              </nav>
+            </div>
+          </div>
+        {% endif %}
+      </section>
+    <!-- About Section -->
+    <section id="about" class="bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-title">About Us</h2>
+            <p class="lead">Our church is a welcoming community that believes in spreading love and kindness. We offer various programs and services to help you grow in your faith.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <img src="https://via.placeholder.com/600x400" alt="About Us" class="img-fluid">
+          </div>
+          <div class="col-md-6">
+            <p>We have a rich history and a vibrant community. Our church is a place where you can connect with others, grow in your faith, and serve the community.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h3 class="section-subtitle">Our Location</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.789214935851!2d36.760929073900655!3d-1.3013686356405554!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f1b3cc1982859%3A0x88993b1e5d46cc20!2sKenya%20Science%20Campus%2C%20University%20of%20Nairobi!5e0!3m2!1sen!2ske!4v1713940487926!5m2!1sen!2ske" width="100%" height="400" style="border:20;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="bg-dark text-white">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-title">Contact Us</h2>
+            <p class="lead">Feel free to reach out to us with any questions or concerns.</p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <form id="contact-form">
+              <div class="form-group">
+                <input type="text" class="form-control form-control-lg" id="name" placeholder="Your Name">
+              </div>
+              <div class="form-group">
+                <input type="email" class="form-control form-control-lg" id="email" placeholder="Your Email">
+              </div>
+              <div class="form-group">
+                <textarea class="form-control form-control-lg" id="message" rows="3" placeholder="Your Message"></textarea>
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-light btn-lg">Send Message</button>
+              </div>
+            </form>
+          </div>
+          <div class="col-md-6">
+            <h3 class="section-subtitle">Contact Information</h3>
+            <p>Dagoretti, Nairobi, Kenya</p>
+            <p>Phone: (123) 456-7890</p>
+            <p>Email: <a href="mailto:ksccu40@gmail.com">info@example.com</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  {% include 'footer.html' %}
+{% endblock %}
+{% include 'footer.html' %}

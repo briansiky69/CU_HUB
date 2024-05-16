@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ group.name }} - Group{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <h1>{{ group.name }}</h1>
+        <p>{{ group.description }}</p>
+        <p><strong>Ministry:</strong> {{ group.ministry.name }}</p>
+        {% for discussion in discussions %}
+          <div class="card my-3">
+            <div class="card-header">
+              <h5 class="card-title">{{ discussion.title }}</h5>
+              <p class="card-text"><small class="text-muted">Posted by {{ discussion.user.username }} on {{ discussion.created_at|date:"F d, Y" }}</small></p>
+            </div>
+            <div class="card-body">
+              <p class="card-text">{{ discussion.content }}</p>
+            </div>
+          </div>
+        {% empty %}
+          <p>No discussions yet.</p>
+        {% endfor %}
+      </div>
+      <div class="col-md-4">
+        <h2>New Discussion</h2>
+        <form method="post">
+          {% csrf_token %}
+          {{ form.as_p }}
+          <button type="submit" class="btn btn-primary">Post</button>
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}

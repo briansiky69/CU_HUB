@@ -1,0 +1,78 @@
+{% block content %}
+<style>
+    body {
+        background-color: #0b2340;
+        color: white;
+    }
+    .container {
+        max-width: 960px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
+    .card {
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    }
+    .card-header {
+        border-radius: 5px 5px 0 0;
+    }
+    .table {
+        border-radius: 5px;
+    }
+    .table th, .table td {
+        border: none;
+    }
+    .table td {
+        vertical-align: middle;
+    }
+    .img-thumbnail {
+        border: none;
+        border-radius: 5px;
+    }
+</style>
+<div class="container mt-4">
+    <div class="row my-4">
+        <div class="col-md-4"></div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    User Profile Page
+                </div>
+                <div class="row p-3">
+                    <div class="col-md-8">
+                        <table class="table table-borderless">
+                            <thead>
+                                <span class="h4">Profile Information</span>
+                                <a class="btn btn-info btn-sm float-right" href="{% url 'event_resources:user-profile-update' %}">Edit</a>
+                                <hr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Name</th>
+                                    <td>{{ user.username }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Email</th>
+                                    <td>{{ user.email }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Phone</th>
+                                    <td>{{ user.profile.phone }}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Address</th>
+                                    <td>{{ user.profile.address }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-md-4">
+                        <img class="img-thumbnail" src="{{ user.profile.image.url }}" alt="profile-image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
