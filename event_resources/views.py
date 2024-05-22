@@ -6,22 +6,12 @@ from django.core.paginator import Paginator
 from django.contrib import messages
 from django.http import JsonResponse
 from django.core.mail import send_mail
-import datetime
-# from .views import MinistryDetailView
-from django.views.generic import DetailView
-from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
-from .forms import CreateUserForm
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-
-
-
-
-
-from .models import Event, Resource, Group, Ministry, Membership, Announcement, DiscussionForum, UserProfile, Sermon
-from .forms import EventForm
+from .models import Event, Resource, Group, Ministry,Announcement, DiscussionForum, Sermon, ResourceCategory, Document
+from .forms import EventForm, DocumentForm
 
 
 def homepage(request):
@@ -182,8 +172,6 @@ def edit_event(request, event_id):
     ministries = Ministry.objects.all()
     return render(request, 'app/edit_event.html', {'form': form, 'event': event, 'ministries': ministries})
 
-
-
 def contact(request):
     if request.method == 'POST':
         name = request.POST['name']
@@ -203,69 +191,38 @@ def contact(request):
 
     return JsonResponse({'status': 'error'})
 
-# def register(request):
-#     if request.method == 'POST':
-#         form = UserRegistrationForm(request.POST)
-#         if form.is_valid():
-#             user = form.save()
-#             login(request, user)
-#             return redirect('home')
-#     else:
-#         form = UserRegistrationForm()
-#     return render(request, 'user/register.html', {'form': form})
-
-def register(request):
-    if request.method == 'POST':
-        form = CreateUserForm(request.POST)
-        if form.is_valid():
-            user = form.save()
-           
-            return redirect('event_resources:user-login')
-    else:
-        form = CreateUserForm()
-    context = {
-        'form': form
-    }
-    return render(request, 'user/register.html', context)
-
-def login_view(request):
-    if request.method == 'POST':
-        form = UserLoginForm(request.POST)
-        if form.is_valid():
-            user = authenticate(request, username=form.cleaned_data['username'], password=form.cleaned_data['password'])
-            if user is not None:
-                login(request, user)
-                return redirect('event_resources:homepage')
-    else:
-        form = UserLoginForm()
-    return render(request, 'user/login.html', {'form': form})
-
 def logout_view(request):
     logout(request)
     # Redirect to a specific page after logout
     return render(request, 'user/logout.html')
 
-def userProfile(request):
-    context = {
+# Document views
+def document_list(request):
+    documents = Document.objects.all()
+    document_type = request.GET.get('document_type')
+    category_id = request.GET.get('category')
 
-    }
-    return render(request, 'user/profile.html', context)
+    if document_type:
+        documents = documents.filter(document_type=document_type)
 
-def profile_update(request):
+    if category_id:
+        documents = documents.filter(category_id=category_id)
+
+    categories = ResourceCategory.objects.all()
+    return render(request, 'e_library.html', {
+        'documents': documents,
+        'categories': categories,
+        'selected_document_type': document_type,
+        'selected_category_id': category_id,
+    })
+
+
+def upload_document(request):
     if request.method == 'POST':
-        u_form = UserUpdateForm(request.POST, instance=request.user)
-        p_form = ProfileUpdateForm(
-            request.POST, request.FILES, instance=request.user.profile)
-        if u_form.is_valid() and p_form.is_valid():
-            u_form.save()
-            p_form.save()
-            return redirect('user-profile')
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('document_list')
     else:
-        u_form = UserUpdateForm(instance=request.user)
-        p_form = ProfileUpdateForm(instance=request.user.profile)
-
-    context = {
-        'u_form': u_form,
-        'p_form': p_form,
-    }
-    return render(request, 'user/profile_update.html', context)
+        form = DocumentForm()
+    return render(request, 'resources/upload_document.html', {'form': form})

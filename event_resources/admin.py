@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import User, Event, Resource, Group, Ministry, Membership, Announcement, DiscussionForum, UserProfile, Sermon
+from .models import User, Event, Resource, Group, Ministry, Membership, Announcement, DiscussionForum, UserProfile, Sermon, ResourceCategory, Document
 
 admin.site.site_header = 'CU HUB Adminstrtor'
 # Register your models here.
@@ -58,3 +58,5 @@ class UserProfileAdmin(admin.ModelAdmin):
 admin.site.register(UserProfile, UserProfileAdmin)
 
 admin.site.register(Sermon)
+admin.site.register(ResourceCategory)
+admin.site.register(Document)

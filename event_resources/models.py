@@ -3,13 +3,6 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
 
-
-# class User(models.Model):
-#     name = models.CharField(max_length=128)
-#     email = models.EmailField(unique=True)
-#     is_student = models.BooleanField(default=False)
-#     is_associate = models.BooleanField(default=False)
-
 class Event(models.Model):
     name = models.CharField(max_length=128)
     description = models.TextField()
@@ -112,6 +105,30 @@ class Sermon(models.Model):
     description = models.TextField()
     ministry = models.ForeignKey('Ministry', on_delete=models.CASCADE)
     
+
+    def __str__(self):
+        return self.title
+    
+
+class ResourceCategory(models.Model):
+    name = models.CharField(max_length=100, unique=True)
+
+    def __str__(self):
+        return self.name
+
+
+class Document(models.Model):
+    CATEGORY_CHOICES = (
+        ('Book', 'Book'),
+        ('Magazine', 'Magazine'),
+        ('Resource', 'Resource'),
+    )
+
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    document_type = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
+    file = models.FileField(upload_to='documents/')
+    category = models.ForeignKey(ResourceCategory, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title

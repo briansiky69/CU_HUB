@@ -3,7 +3,7 @@ from .models import Event, Resource, Ministry
 from .models import Event, Resource, Group, Ministry, Membership, Announcement, DiscussionForum, UserProfile
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import UserProfile
+from .models import UserProfile, Document
 
 
 class EventForm(forms.ModelForm):
@@ -67,7 +67,14 @@ class UserUpdateForm(forms.ModelForm):
         fields = ['username', 'email']
 
 
-# class ProfileUpdateForm(forms.ModelForm):
-#     class Meta:
-#         model = UserProfile
-#         fields = ['phone', 'address', 'image']
+class DocumentForm(forms.ModelForm):
+    class Meta:
+        model = Document
+        fields = ['title', 'description', 'document_type', 'file', 'category']
+        widgets = {
+            'title': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'document_type': forms.Select(attrs={'class': 'form-control'}),
+            'file': forms.ClearableFileInput(attrs={'class': 'form-control-file'}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
+        }
