@@ -2,19 +2,10 @@
 
 {% block content %}
 <div class="container-fluid p-0">
-    <h1>Documents</h1>
+    <h1>E-Library</h1>
     
     <!-- Filter Form -->
     <form method="get" class="form-inline mb-3">
-        <div class="form-group mr-2">
-            <label for="document_type" class="mr-2">Document Type:</label>
-            <select id="document_type" name="document_type" class="form-control">
-                <option value="">All</option>
-                {% for type, name in Document.CATEGORY_CHOICES %}
-                    <option value="{{ type }}" {% if selected_document_type == type %}selected{% endif %}>{{ name }}</option>
-                {% endfor %}
-            </select>
-        </div>
         <div class="form-group mr-2">
             <label for="category" class="mr-2">Category:</label>
             <select id="category" name="category" class="form-control">
@@ -28,16 +19,26 @@
     </form>
     
     <!-- Document List -->
-    <ul class="list-group">
+    <ul class="list-group list-unstyled">
         {% for document in documents %}
-            <li class="list-group-item">
-                {{ document.title }} ({{ document.get_document_type_display }}) - <a href="{{ document.file.url }}" target="_blank">Download</a>
+            <li class="list-group-item d-flex">
+                <div class="flex-1">
+                    <iframe src="{{ document.file.url }}" width="300px" height="200px">
+                        This browser does not support PDFs. Please download the PDF to view it: <a href="{{ document.file.url }}">Download PDF</a>
+                    </iframe>
+                </div>
+                <div class="ml-4">
+                    {{ document.title }} ({{ document.get_document_type_display }}) - <a href="{{ document.file.url }}" target="_blank">Download</a>
                 <p>{{ document.description }}</p>
                 <small>Category: {{ document.category.name }}</small>
+                </div>
             </li>
         {% empty %}
             <li class="list-group-item">No documents found.</li>
         {% endfor %}
+            <li class="nav-item my-2">
+                    <a class="nav-link text-white bg-success px-2 py-1" href="{% url 'event_resources:upload_document' %}">Upload Document</a>
+                </li>
     </ul>
 </div>
 {% endblock %}

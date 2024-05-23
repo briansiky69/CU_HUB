@@ -225,4 +225,4 @@ def upload_document(request):
             return redirect('document_list')
     else:
         form = DocumentForm()
-    return render(request, 'resources/upload_document.html', {'form': form})
+    return render(request, 'upload_document.html', {'form': form})
