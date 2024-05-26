@@ -222,7 +222,7 @@ def upload_document(request):
         form = DocumentForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
-            return redirect('document_list')
+            return redirect('event_resources:document_list')
     else:
         form = DocumentForm()
     return render(request, 'upload_document.html', {'form': form})

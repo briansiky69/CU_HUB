@@ -66,14 +66,14 @@
                         <a class="nav-link" href="">Profile</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'event_resources:user-logout' %}">Logout</a>
+                        <a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a>
                     </li>
                 {% else %}
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'event_resources:user-login' %}">Login</a>
+                        <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{% url 'event_resources:register' %}">Sign up</a>
+                        <a class="nav-link" href="{% url 'accounts:register' %}">Register</a>
                     </li>
                 {% endif %}
             </ul>

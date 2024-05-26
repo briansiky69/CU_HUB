@@ -10,7 +10,8 @@ admin.site.site_header = 'CU Hub Administration'
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-     path('', include(('event_resources.urls', 'event_resources'))),
+    path('', include(('event_resources.urls', 'event_resources'))),
+    path('accounts/', include('accounts.urls')),
      ]
 
 if settings.DEBUG:
