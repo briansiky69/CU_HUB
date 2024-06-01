@@ -4,6 +4,8 @@ from django.contrib.auth import views as auth_views
 from django.conf import settings
 from django.urls import path, include
 from django.urls import reverse_lazy
+from django.conf import settings
+from django.conf.urls.static import static
 
 
 urlpatterns = [
@@ -23,3 +25,7 @@ urlpatterns = [
     path('e-library/upload/document/', views.upload_document, name='upload_document'),
     path('logout/', views.logout_view, name='user-logout'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL,
+                          document_root=settings.MEDIA_ROOT)

@@ -1,176 +1,176 @@
-{% extends 'base.html' %}
-{% block content %}
-<div class="p-0">
-    <div
-      class="welcome-image my-3 roudend"
-    >
-      <div class="overlay"></div>
+{% extends 'base.html' %} {% load static %} {% block content %}
+<style>
+  .carousel-item {
+    display: none; /* Hide all carousel items by default */
+  }
+  .carousel-item.active {
+    display: flex; /* Display active carousel item as flex */
+  }
+  .card {
+    flex: 1 0 0;
+    margin: 10px;
+  }
+</style>
+</style>
+<div class="">
+  <div class="welcome-image mb-3 roudend">
+    <div class="overlay"></div>
 
-      <div class="text-overlay text-center text-white">
-        <h1>Welcome to Our Church</h1>
-        <p>Join us and become part of our community.</p>
-        <button type="button" class="btn btn-primary">Learn More</button>
-        <button type="button" class="btn btn-secondary">Join Us</button>
-      </div>
+    <div class="text-overlay text-center text-white">
+      <h1>Welcome to Our Church</h1>
+      <p>Join us and become part of our community.</p>
+      <button type="button" class="btn btn-primary">Learn More</button>
+      <button type="button" class="btn btn-secondary">Join Us</button>
     </div>
+  </div>
   <!-- upcoming events section -->
-  <section>
-    <h2>Upcoming Events</h2>
-    <div class="row">
-      {% for event in events %}
-        <div class="col-md-4 event-col">
-          <div class="card mb-4">
-            <img
-              src="/static/img/welcome.png.JPG"
-              class="card-img-top"
-              alt="{{ event.name }}"
-            />
-            <div class="card-body">
-              <h5 class="card-title">{{ event.name }}</h5>
-              <p class="card-text">
-                {{ event.start_time|date:"F d, Y" }} - {{ event.end_time|date:"F
-                d, Y" }}
-              </p>
-              <p class="card-text">{{ event.description }}</p>
-              <a href="" class="btn btn-primary">Learn more</a>
+  <section class="container mt-5">
+    <h2 class="h2 my-3">Upcoming Events</h2>
+    <div id="eventsCarousel" class="carousel slide" data-ride="carousel">
+      <div class="carousel-inner">
+        {% for grouped_events in events %}
+          <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            <div class="row d-flex">
+              {% for event in grouped_events %}
+                <div class="col-md-4">
+                <div class="card mb-4">
+                  {% if event.image %}
+                  <img
+                    src="{{ event.image.url }}"
+                    class="card-img-top"
+                    alt="{{ event.name }}"
+                  />
+                  {% endif %}
+                  <div class="card-body">
+                    <h5 class="card-title">{{ event.name }}</h5>
+                    <p class="card-text">
+                      {{ event.start_time | date:"F d, Y" }} - {{ event.end_time | date:"F d, Y" }}
+                    </p>
+                    <p class="card-text">{{ event.description }}</p>
+                    <a href="" class="btn btn-primary">Learn more</a>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
             </div>
           </div>
-        </div>
-      {% empty %}
-        <p>No events found.</p>
-      {% endfor %}
-    </div>
-    <div class="row">
-      <div class="col-12">
-        <nav aria-label="Page navigation example">
-          <ul class="pagination justify-content-center">
-            {% if events.has_previous %}
-              <li class="page-item">
-                <a
-                  class="page-link"
-                  href="?page={{ events.previous_page_number }}"
-                  tabindex="-1"
-                  aria-label="Previous"
-                >
-                  <span aria-hidden="true">&laquo;</span>
-                  <span class="sr-only">Previous</span>
-                </a>
-              </li>
-            {% endif %}
-            {% for i in events.paginator.page_range %}
-              {% if events.number == i %}
-                <li class="page-item active">
-                  <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-                </li>
-              {% elif i > events.number|add:-3 and i < events.number|add:3 %}
-                <li class="page-item">
-                  <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-                </li>
-              {% endif %} 
-            {% endfor %}
-            {% if events.has_next %}
-              <li class="page-item">
-                <a class="page-link" href="?page={{ events.next_page_number }}">
-                  <span aria-hidden="true">&raquo;</span>
-                  <span class="sr-only">Next</span>
-                </a>
-              </li>
-            {% endif %}
-          </ul>
-        </nav>
+        {% endfor %}
       </div>
+      <a
+        class="carousel-control-prev"
+        href="#eventsCarousel"
+        role="button"
+        data-slide="prev"
+      >
+        <span class="carousel-control-prev-icon text-dark" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+      </a>
+      <a
+        class="carousel-control-next"
+        href="#eventsCarousel"
+        role="button"
+        data-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+      </a>
     </div>
   </section>
-  <section>
-    <h2>Upcoming Sermons</h2>
-    <div class="row">
-      {% for sermon in sermons %}
-      <div class="col-md-4 sermon-col">
-        <div class="card mb-4">
-          {% if sermon.image %}
-          <img
-            src="{{ sermon.image.url }}"
-            class="card-img-top"
-            alt="{{ sermon.title }}"
-          />
-          {% else %}
-          <img
-            src="/static/img/default-sermon-image.jpg"
-            class="card-img-top"
-            alt="{{ sermon.title }}"
-          />
-          {% endif %}
-          <div class="card-body">
-            <h5 class="card-title">{{ sermon.title }}</h5>
-            <p class="card-text">
-              <strong>Speaker:</strong> {{ sermon.speaker }}
-            </p>
-            <p class="card-text">
-              <strong>Date:</strong> {{ sermon.date|date:"F d, Y" }}
-            </p>
-            <p class="card-text">{{ sermon.description|truncatewords:20 }}</p>
-            {% if sermon.video_link %}
-            <div class="embed-responsive embed-responsive-16by9">
-              <iframe
-                class="embed-responsive-item"
-                src="https://www.youtube.com/embed/{{ sermon.video_link }}"
-                allowfullscreen
-              ></iframe>
-            </div>
+  <section class="container-fluid bg-light p-5">
+    <div class="container">
+      <h2>Upcoming Sermons</h2>
+      <div class="row">
+        {% for sermon in sermons %}
+        <div class="col-md-4 sermon-col">
+          <div class="card mb-4">
+            {% if sermon.image %}
+            <img
+              src="{{ sermon.image.url }}"
+              class="card-img-top"
+              alt="{{ sermon.title }}"
+            />
+            {% else %}
+            <img
+              src="/static/img/default-sermon-image.jpg"
+              class="card-img-top"
+              alt="{{ sermon.title }}"
+            />
             {% endif %}
-            <a href="#" class="btn btn-primary">Learn more</a>
+            <div class="card-body">
+              <h5 class="card-title">{{ sermon.title }}</h5>
+              <p class="card-text">
+                <strong>Speaker:</strong> {{ sermon.speaker }}
+              </p>
+              <p class="card-text">
+                <strong>Date:</strong> {{ sermon.date|date:"F d, Y" }}
+              </p>
+              <p class="card-text">{{ sermon.description|truncatewords:20 }}</p>
+              {% if sermon.video_link %}
+              <div class="embed-responsive embed-responsive-16by9">
+                <iframe
+                  class="embed-responsive-item"
+                  src="https://www.youtube.com/embed/{{ sermon.video_link }}"
+                  allowfullscreen
+                ></iframe>
+              </div>
+              {% endif %}
+              <a href="#" class="btn btn-primary">Learn more</a>
+            </div>
           </div>
         </div>
+        {% empty %}
+        <p>No sermons found.</p>
+        {% endfor %}
       </div>
-      {% empty %}
-      <p>No sermons found.</p>
-      {% endfor %}
+      {% if sermons.paginator.num_pages > 1 %}
+        <div class="row">
+          <div class="col-12">
+            <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-center">
+                {% if sermons.has_previous %}
+                  <li class="page-item">
+                    <a
+                      class="page-link"
+                      href="?page={{ sermons.previous_page_number }}"
+                      tabindex="-1"
+                      aria-label="Previous"
+                    >
+                      <span aria-hidden="true">&laquo;</span>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                {% endif %}
+                {% for i in sermons.paginator.page_range %}
+                  {% if sermons.number == i %}
+                  <li class="page-item active">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                  </li>
+                  {% elif i > sermons.number|add:-3 and i < sermons.number|add:3 %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
+                  </li>
+                  {% endif %}
+                {% endfor %}
+                {% if sermons.has_next %}
+                  <li class="page-item">
+                    <a
+                      class="page-link"
+                      href="?page={{ sermons.next_page_number }}"
+                    >
+                      <span aria-hidden="true">&raquo;</span>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                {% endif %}
+              </ul>
+            </nav>
+          </div>
+        </div>
+      {% endif %}
     </div>
-    {% if sermons.paginator.num_pages > 1 %}
-    <div class="row">
-      <div class="col-12">
-        <nav aria-label="Page navigation example">
-          <ul class="pagination justify-content-center">
-            {% if sermons.has_previous %}
-            <li class="page-item">
-              <a
-                class="page-link"
-                href="?page={{ sermons.previous_page_number }}"
-                tabindex="-1"
-                aria-label="Previous"
-              >
-                <span aria-hidden="true">&laquo;</span>
-                <span class="sr-only">Previous</span>
-              </a>
-            </li>
-            {% endif %}
-            {% for i in sermons.paginator.page_range %}
-              {% if sermons.number == i %}
-              <li class="page-item active">
-                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-              </li>
-              {% elif i > sermons.number|add:-3 and i < sermons.number|add:3 %}
-              <li class="page-item">
-                <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-              </li>
-              {% endif %} 
-            {% endfor %}
-            {% if sermons.has_next %}
-            <li class="page-item">
-              <a class="page-link" href="?page={{ sermons.next_page_number }}">
-                <span aria-hidden="true">&raquo;</span>
-                <span class="sr-only">Next</span>
-              </a>
-            </li>
-            {% endif %}
-          </ul>
-        </nav>
-      </div>
-    </div>
-    {% endif %}
   </section>
   <!-- About Section -->
-  <section id="about" class="bg-light">
+  <section id="about">
     <div class="container">
       <div class="row">
         <div class="col-lg-12 text-center">
@@ -273,6 +273,10 @@
       </div>
     </div>
   </section>
-
   {% include 'footer.html' %} {% endblock %} {% include 'footer.html' %}
+  <script>
+    $('#eventsCarousel').carousel({
+            interval: 3000 // 3 seconds
+    });
+</script>
 </div>

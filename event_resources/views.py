@@ -15,7 +15,11 @@ from .forms import EventForm, DocumentForm
 
 
 def homepage(request):
-    events = Event.objects.all()[:3]
+    events = Event.objects.all()
+    grouped_events = []
+
+    for i in range(0, len(events), 3):
+        grouped_events.append(events[i:i + 3])
     paginator = Paginator(events, 3) # Show 3 events per page
     page_number = request.GET.get('page')
     page_obj = paginator.get_page(page_number)
@@ -24,7 +28,7 @@ def homepage(request):
     sermons = Sermon.objects.all()[:3]
     # sermons = Sermon.objects.filter(date__gte=datetime.date.today()).order_by('date')
 
-    return render(request, 'homepage.html', {'events': page_obj, 'resources': resources, 'announcements': announcements,'sermons': sermons, })
+    return render(request, 'homepage.html', {'events': grouped_events, 'resources': resources, 'announcements': announcements,'sermons': sermons, })
 
 # def ministry(request,):
 #     ministry = [Ministry.objects.get()]
