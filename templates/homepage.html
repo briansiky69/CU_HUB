@@ -1,17 +1,8 @@
-{% extends 'base.html' %} {% load static %} {% block content %}
-<style>
-  .carousel-item {
-    display: none; /* Hide all carousel items by default */
-  }
-  .carousel-item.active {
-    display: flex; /* Display active carousel item as flex */
-  }
-  .card {
-    flex: 1 0 0;
-    margin: 10px;
-  }
-</style>
-</style>
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_css %}
+    <link href="{% static 'css/event_slider.css' %}" rel="stylesheet">
+{% endblock %} {% block content %}
 <div class="">
   <div class="welcome-image mb-3 roudend">
     <div class="overlay"></div>
