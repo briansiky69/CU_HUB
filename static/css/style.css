@@ -1,5 +1,5 @@
-body{
-    background: rgb(161, 135, 235);
+body {
+  background: rgb(216, 211, 229);
 }
 .my-card:hover{
     transform: scale(1.1);
@@ -100,8 +100,9 @@ body{
   }
   .welcome-image {
     position: relative;
-    height: 400px; /* Adjust height as needed */
+    background-image: url("{% static '/static/img/welcome.jpg' %}");
     background-size: cover;
+    height: 100vh;
   }
   
   .overlay {
