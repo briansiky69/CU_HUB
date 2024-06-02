@@ -57,6 +57,9 @@
                 <a class="nav-link" href="{% url 'event_resources:give' %}">Give</a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="{% url 'event_resources:about' %}">About Us</a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="{% url 'event_resources:contact' %}">Contact</a>
             </li>
             {% if user.is_authenticated %}

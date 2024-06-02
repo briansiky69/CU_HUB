@@ -105,21 +105,7 @@
       </div>
     </div>
   </section>
-  <!-- Call to acton  -->
-  <section class="cta-section p-5">
-    <div class="cta-overlay p-5">
-        <div class="container">
-            <div class="row">
-                <div class="col text-center">
-                    <h2 class="cta-title">Join Our Community</h2>
-                    <p class="cta-description">Be part of our vibrant community at KSCCU. Reach out to us for more information and get involved in our events and activities.</p>
-                    <a href="{% url 'event_resources:contact' %}" class="btn btn-primary cta-button">Contact Us</a>
-                </div>
-            </div>
-        </div>
-    </div>
-  </section>
-  <!-- Call to acton  -->
+  {% include 'CallToAction.html' %}
   {% include 'footer.html' %} {% endblock %} {% include 'footer.html' %}
   <script>
     $('#eventsCarousel').carousel({
