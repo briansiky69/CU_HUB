@@ -129,6 +129,7 @@ class Document(models.Model):
     document_type = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
     file = models.FileField(upload_to='documents/')
     category = models.ForeignKey(ResourceCategory, on_delete=models.CASCADE)
+    thumbnail = models.ImageField(upload_to='thumbnails/', null=True, default=None)
 
     def __str__(self):
         return self.title
