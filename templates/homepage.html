@@ -74,19 +74,15 @@
         {% for sermon in sermons %}
         <div class="col-md-4 sermon-col">
           <div class="card mb-4">
-            {% if sermon.image %}
-            <img
-              src="{{ sermon.image.url }}"
-              class="card-img-top"
-              alt="{{ sermon.title }}"
-            />
-            {% else %}
-            <img
-              src="/static/img/default-sermon-image.jpg"
-              class="card-img-top"
-              alt="{{ sermon.title }}"
-            />
-            {% endif %}
+            {% if sermon.video_link %}
+              <div class="embed-responsive embed-responsive-16by9">
+                <iframe
+                  class="embed-responsive-item"
+                  src="https://www.youtube.com/embed/{{ sermon.video_link }}"
+                  allowfullscreen
+                ></iframe>
+              </div>
+              {% endif %}
             <div class="card-body">
               <h5 class="card-title">{{ sermon.title }}</h5>
               <p class="card-text">
@@ -96,16 +92,7 @@
                 <strong>Date:</strong> {{ sermon.date|date:"F d, Y" }}
               </p>
               <p class="card-text">{{ sermon.description|truncatewords:20 }}</p>
-              {% if sermon.video_link %}
-              <div class="embed-responsive embed-responsive-16by9">
-                <iframe
-                  class="embed-responsive-item"
-                  src="https://www.youtube.com/embed/{{ sermon.video_link }}"
-                  allowfullscreen
-                ></iframe>
-              </div>
-              {% endif %}
-              <a href="#" class="btn btn-primary">Learn more</a>
+              <a href="https://youtu.be/{{sermon.video_link}}" target="_blank" class="w-100 btn btn-primary my-3">Learn more</a>
             </div>
           </div>
         </div>
@@ -113,157 +100,26 @@
         <p>No sermons found.</p>
         {% endfor %}
       </div>
-      {% if sermons.paginator.num_pages > 1 %}
-        <div class="row">
-          <div class="col-12">
-            <nav aria-label="Page navigation example">
-              <ul class="pagination justify-content-center">
-                {% if sermons.has_previous %}
-                  <li class="page-item">
-                    <a
-                      class="page-link"
-                      href="?page={{ sermons.previous_page_number }}"
-                      tabindex="-1"
-                      aria-label="Previous"
-                    >
-                      <span aria-hidden="true">&laquo;</span>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                  </li>
-                {% endif %}
-                {% for i in sermons.paginator.page_range %}
-                  {% if sermons.number == i %}
-                  <li class="page-item active">
-                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-                  </li>
-                  {% elif i > sermons.number|add:-3 and i < sermons.number|add:3 %}
-                  <li class="page-item">
-                    <a class="page-link" href="?page={{ i }}">{{ i }}</a>
-                  </li>
-                  {% endif %}
-                {% endfor %}
-                {% if sermons.has_next %}
-                  <li class="page-item">
-                    <a
-                      class="page-link"
-                      href="?page={{ sermons.next_page_number }}"
-                    >
-                      <span aria-hidden="true">&raquo;</span>
-                      <span class="sr-only">Next</span>
-                    </a>
-                  </li>
-                {% endif %}
-              </ul>
-            </nav>
-          </div>
-        </div>
-      {% endif %}
-    </div>
-  </section>
-  <!-- About Section -->
-  <section id="about">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12 text-center">
-          <h2 class="section-title">About Us</h2>
-          <p class="lead">
-            Our church is a welcoming community that believes in spreading love
-            and kindness. We offer various programs and services to help you
-            grow in your faith.
-          </p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <img
-            src="https://via.placeholder.com/600x400"
-            alt="About Us"
-            class="img-fluid"
-          />
-        </div>
-        <div class="col-md-6">
-          <p>
-            We have a rich history and a vibrant community. Our church is a
-            place where you can connect with others, grow in your faith, and
-            serve the community.
-          </p>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-12 text-center">
-          <h3 class="section-subtitle">Our Location</h3>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-12">
-          <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.789214935851!2d36.760929073900655!3d-1.3013686356405554!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x182f1b3cc1982859%3A0x88993b1e5d46cc20!2sKenya%20Science%20Campus%2C%20University%20of%20Nairobi!5e0!3m2!1sen!2ske!4v1713940487926!5m2!1sen!2ske"
-            width="100%"
-            height="400"
-            style="border: 20"
-            allowfullscreen=""
-            loading="lazy"
-            referrerpolicy="no-referrer-when-downgrade"
-          ></iframe>
-        </div>
+      <div class="row d-flex justify-content-center mt-3">
+        <a href="https://www.youtube.com/@ksccufamily" class="btn btn-danger" target="_blank">View More on Youtube</a>
       </div>
     </div>
   </section>
-
-  <!-- Contact Section -->
-  <section id="contact" class="bg-dark text-white">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-12 text-center">
-          <h2 class="section-title">Contact Us</h2>
-          <p class="lead">
-            Feel free to reach out to us with any questions or concerns.
-          </p>
+  <!-- Call to acton  -->
+  <section class="cta-section p-5">
+    <div class="cta-overlay p-5">
+        <div class="container">
+            <div class="row">
+                <div class="col text-center">
+                    <h2 class="cta-title">Join Our Community</h2>
+                    <p class="cta-description">Be part of our vibrant community at KSCCU. Reach out to us for more information and get involved in our events and activities.</p>
+                    <a href="{% url 'event_resources:contact' %}" class="btn btn-primary cta-button">Contact Us</a>
+                </div>
+            </div>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-md-6">
-          <form id="contact-form">
-            <div class="form-group">
-              <input
-                type="text"
-                class="form-control form-control-lg"
-                id="name"
-                placeholder="Your Name"
-              />
-            </div>
-            <div class="form-group">
-              <input
-                type="email"
-                class="form-control form-control-lg"
-                id="email"
-                placeholder="Your Email"
-              />
-            </div>
-            <div class="form-group">
-              <textarea
-                class="form-control form-control-lg"
-                id="message"
-                rows="3"
-                placeholder="Your Message"
-              ></textarea>
-            </div>
-            <div class="form-group">
-              <button type="submit" class="btn btn-light btn-lg">
-                Send Message
-              </button>
-            </div>
-          </form>
-        </div>
-        <div class="col-md-6">
-          <h3 class="section-subtitle">Contact Information</h3>
-          <p>Dagoretti, Nairobi, Kenya</p>
-          <p>Phone: (123) 456-7890</p>
-          <p>Email: <a href="mailto:ksccu40@gmail.com">info@example.com</a></p>
-        </div>
-      </div>
     </div>
   </section>
+  <!-- Call to acton  -->
   {% include 'footer.html' %} {% endblock %} {% include 'footer.html' %}
   <script>
     $('#eventsCarousel').carousel({
