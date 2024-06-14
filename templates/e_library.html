@@ -1,45 +1,61 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="container p-0">
-    <div class="row d-flex justify-content-between align-items-center my-3">
-        <h2 class="h2 my-auto">E-Library</h2>
-        <form method="get" class="form-inline">
-            <div class="form-group mr-2">
-                <label for="category" class="mr-2">Category:</label>
-                <select id="category" name="category" class="form-control">
-                    <option value="">All</option>
-                    {% for category in categories %}
+<div class="container">
+    <div class="row justify-content-between align-items-center my-3">
+        <div class="col-md-8">
+            <h2 class="my-auto">E-Library</h2>
+        </div>
+        <div class="col-md-4">
+            <form method="get" class="form-inline">
+                <div class="form-group mr-2">
+                    <label for="category" class="mr-2">Category:</label>
+                    <select id="category" name="category" class="form-control">
+                        <option value="">All</option>
+                        {% for category in categories %}
                         <option value="{{ category.id }}" {% if selected_category_id|default:'' == category.id %}selected{% endif %}>{{ category.name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Filter</button>
-        </form>
+                        {% endfor %}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Filter</button>
+            </form>
+        </div>
     </div>
     <div class="row">
-         <!-- Document List -->
-    <ul class="list-group list-unstyled">
-        {% for document in documents %}
-            <li class="list-group-item d-flex">
-                <div class="flex-1">
-                    {% if document.thumbnail %}
-                    <img src="{{document.thumbnail.url}}" alt="{{document.title}}">
-                    {% endif %}
-                </div>
-                <div class="ml-4">
-                    {{ document.title }} ({{ document.get_document_type_display }}) - <a href="{{ document.file.url }}" target="_blank">Download</a>
-                <p>{{ document.description }}</p>
-                <small>Category: {{ document.category.name }}</small>
-                </div>
-            </li>
-        {% empty %}
-            <li class="list-group-item">No documents found.</li>
-        {% endfor %}
-            <li class="nav-item my-2">
-                    <a class="nav-link text-white bg-success px-2 py-1" href="{% url 'event_resources:upload_document' %}">Upload Document</a>
+        <div class="col-md-12">
+            <ul class="list-group">
+                {% for document in documents %}
+                <li class="list-group-item">
+                    <div class="row align-items-center">
+                        <div class="col-md-2">
+                            {% if document.thumbnail %}
+                            <img src="{{document.thumbnail.url}}" alt="{{document.title}}" class="img-fluid">
+                            {% else %}
+                            <div class="text-center">
+                                <i class="fas fa-file-alt fa-3x"></i>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="col-md-10">
+                            <h4>{{ document.title }}</h4>
+                            <p>{{ document.description }}</p>
+                            <p><strong>Type:</strong> {{ document.get_document_type_display }}</p>
+                            <p><small>Category: {{ document.category.name }}</small></p>
+                            <p><a href="{{ document.file.url }}" class="btn btn-primary" target="_blank">Download</a></p>
+                        </div>
+                    </div>
                 </li>
-    </ul>
+                {% empty %}
+                <li class="list-group-item">No documents found.</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <a href="{% url 'event_resources:upload_document' %}" class="btn btn-success btn-lg">Upload Document</a>
+        </div>
     </div>
 </div>
-{% include 'footer.html' %} {% endblock %}
+{% include 'footer.html' %}
+{% endblock %}

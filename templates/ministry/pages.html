@@ -1,112 +1,106 @@
 {% extends "base.html" %}
 
 {% block content %}
-  <div class="container">
+<div class="container">
     <h1 class="mt-5 mb-4">Ministries</h1>
-    <div class="row">
-      {% for ministry in ministries %}
-      <div class="col-md-6 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <h2 class="card-title">{{ ministry.name }}</h2>
-            <p class="card-text">{{ ministry.description }}</p>
-          </div>
-
-          {% with ministry.event_set.all|slice:":3" as events %}
-            {% if events %}
-              <ul class="list-group list-group-flush">
-                <h3 class="card-header">Upcoming Events:</h3>
-                {% for event in events %}
-                  <li class="list-group-item">
-                    <h4>{{ event.title }}</h4>
-                    <p>{{ event.description }}</p>
-                    <p>{{ event.date }}</p>
-                  </li>
+    <div class="table-responsive bg-white">
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Upcoming Events</th>
+                    <th>Resources</th>
+                    <th>Announcements</th>
+                    <th>Sermons</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ministry in ministries %}
+                <tr>
+                    <td>{{ ministry.name }}</td>
+                    <td>{{ ministry.description }}</td>
+                    <td>
+                        <ul class="list-unstyled">
+                            {% for event in ministry.event_set.all|slice:":3" %}
+                            <li>
+                                <strong>{{ event.title }}</strong><br>
+                                {{ event.description }}<br>
+                                {{ event.date }}
+                            </li>
+                            {% empty %}
+                            <li>No events for this ministry.</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <ul class="list-unstyled">
+                            {% for resource in ministry.resource_set.all|slice:":3" %}
+                            <li>
+                                <strong>{{ resource.title }}</strong><br>
+                                {{ resource.description }}<br>
+                                {% if resource.image %}
+                                <img src="{{ resource.image.url }}" alt="{{ resource.title }}" class="img-fluid">
+                                {% endif %}
+                            </li>
+                            {% empty %}
+                            <li>No resources for this ministry.</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <ul class="list-unstyled">
+                            {% for announcement in ministry.announcement_set.all|slice:":3" %}
+                            <li>
+                                <strong>{{ announcement.title }}</strong><br>
+                                {{ announcement.description }}
+                            </li>
+                            {% empty %}
+                            <li>No announcements for this ministry.</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                    <td>
+                        <ul class="list-unstyled">
+                            {% for sermon in ministry.sermon_set.all|slice:":3" %}
+                            <li>
+                                <strong>{{ sermon.title }}</strong><br>
+                                {{ sermon.description }}<br>
+                                {% if sermon.image %}
+                                <img src="{{ sermon.image.url }}" alt="{{ sermon.title }}" class="img-fluid">
+                                {% endif %}
+                            </li>
+                            {% empty %}
+                            <li>No sermons for this ministry.</li>
+                            {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
                 {% empty %}
-                  <li class="list-group-item"><p>No events for this ministry.</p></li>
+                <tr>
+                    <td colspan="6">No ministries found.</td>
+                </tr>
                 {% endfor %}
-              </ul>
-            {% endif %}
-          {% endwith %}
-
-          {% with ministry.resource_set.all|slice:":3" as resources %}
-            {% if resources %}
-              <ul class="list-group list-group-flush">
-                <h3 class="card-header">Resources:</h3>
-                {% for resource in resources %}
-                  <li class="list-group-item">
-                    <h4>{{ resource.title }}</h4>
-                    <p>{{ resource.description }}</p>
-                    {% if resource.image %}
-                      <img src="{{ resource.image.url }}" alt="{{ resource.title }}" class="img-fluid">
-                    {% endif %}
-                  </li>
-                {% empty %}
-                  <li class="list-group-item"><p>No resources for this ministry.</p></li>
-                {% endfor %}
-              </ul>
-            {% endif %}
-          {% endwith %}
-
-          {% with ministry.announcement_set.all|slice:":3" as announcements %}
-            {% if announcements %}
-              <ul class="list-group list-group-flush">
-                <h3 class="card-header">Announcements:</h3>
-                {% for announcement in announcements %}
-                  <li class="list-group-item">
-                    <h4>{{ announcement.title }}</h4>
-                    <p>{{ announcement.description }}</p>
-                  </li>
-                {% empty %}
-                  <li class="list-group-item"><p>No announcements for this ministry.</p></li>
-                {% endfor %}
-              </ul>
-            {% endif %}
-          {% endwith %}
-
-          {% with ministry.sermon_set.all|slice:":3" as sermons %}
-            {% if sermons %}
-              <ul class="list-group list-group-flush">
-                <h3 class="card-header">Sermons:</h3>
-                {% for sermon in sermons %}
-                  <li class="list-group-item">
-                    <h4>{{ sermon.title }}</h4>
-                    <p>{{ sermon.description }}</p>
-                    {% if sermon.image %}
-                      <img src="{{ sermon.image.url }}" alt="{{ sermon.title }}" class="img-fluid">
-                    {% endif %}
-                  </li>
-                {% empty %}
-                  <li class="list-group-item"><p>No sermons for this ministry.</p></li>
-                {% endfor %}
-              </ul>
-            {% endif %}
-          {% endwith %}
-        </div>
-      </div>
-      {% empty %}
-        <div class="col-12">
-          <p>No ministries found.</p>
-        </div>
-      {% endfor %}
+            </tbody>
+        </table>
     </div>
 
     <nav aria-label="Page navigation">
-      <ul class="pagination justify-content-center mt-5">
-        {% if ministries.has_previous %}
-          <li class="page-item">
-            <a class="page-link" href="?page={{ ministries.previous_page_number }}">Previous</a>
-          </li>
-        {% endif %}
-        <li class="page-item disabled">
-          <span class="page-link">Page {{ ministries.number }} of {{ ministries.paginator.num_pages }}.</span>
-        </li>
-        {% if ministries.has_next %}
-          <li class="page-item">
-            <a class="page-link" href="?page={{ ministries.next_page_number }}">Next</a>
-          </li>
-        {% endif %}
-      </ul>
+        <ul class="pagination justify-content-center mt-5">
+            {% if ministries.has_previous %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ ministries.previous_page_number }}">Previous</a>
+            </li>
+            {% endif %}
+            <li class="page-item disabled">
+                <span class="page-link">Page {{ ministries.number }} of {{ ministries.paginator.num_pages }}.</span>
+            </li>
+            {% if ministries.has_next %}
+            <li class="page-item">
+                <a class="page-link" href="?page={{ ministries.next_page_number }}">Next</a>
+            </li>
+            {% endif %}
+        </ul>
     </nav>
-  </div>
+</div>
 {% endblock %}
