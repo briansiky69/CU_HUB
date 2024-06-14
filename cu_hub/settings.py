@@ -30,7 +30,7 @@ INSTALLED_APPS = [
     'crispy_forms',
 ]
 
-# AUTH_USER_MODEL = 'accounts.CustomUser'
+AUTH_USER_MODEL = 'accounts.CustomUser'
 
 
 MIDDLEWARE = [

@@ -28,14 +28,14 @@ class Group(models.Model):
 class Ministry(models.Model):
     name = models.CharField(max_length=128)
     short_message = models.TextField()
-    leader = models.ForeignKey(User, on_delete=models.CASCADE)
+    leader = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     image = models.ImageField(upload_to='ministries/images/', blank=True, null=True)
     leader_email = models.EmailField(blank=True, null=True)
     leader_phone = models.CharField(max_length=32, blank=True, null=True)
     leader_address = models.CharField(max_length=256, blank=True, null=True)
 
 class Membership(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     ministry = models.ForeignKey(Ministry, on_delete=models.CASCADE)
     date_joined = models.DateField()
     invite_reason = models.CharField(max_length=64)
@@ -51,7 +51,7 @@ class DiscussionForum(models.Model):
     content = models.TextField()
     ministry = models.ForeignKey('Ministry', on_delete=models.CASCADE)
     created_on = models.DateTimeField(auto_now_add=True)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
 
 
@@ -71,7 +71,7 @@ class UserProfile(models.Model):
         ('female', _('Female')),
     ]
     
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name='profile')
+    user = models.OneToOneField(CustomUser, on_delete=models.CASCADE, related_name='profile')
     full_name = models.CharField(max_length=128, default='',  verbose_name=_('Full Name'))
     gender = models.CharField(max_length=6, choices=GENDER_CHOICES, verbose_name=_('Gender'))
     email = models.EmailField(default='', verbose_name=_('Email'))
@@ -123,6 +123,7 @@ class Document(models.Model):
         ('Book', 'Book'),
         ('Magazine', 'Magazine'),
         ('Resource', 'Resource'),
+        ('Official Documents', 'Official Documents')
     )
 
     title = models.CharField(max_length=200)
@@ -139,7 +140,7 @@ class Document(models.Model):
 class Topic(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
-    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='topics')
+    created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='topics')
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
