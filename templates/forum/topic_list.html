@@ -1,10 +1,19 @@
-{% extends "base.html" %}
-{% block content %}
-<h2>Topics</h2>
-<a href="{% url 'event_resources:create_topic' %}">Create New Topic</a>
-<ul>
-    {% for topic in topics %}
-    <li><a href="{% url 'event_resources:topic_detail' topic.pk %}">{{ topic.title }}</a></li>
-    {% endfor %}
-</ul>
+{% extends "base.html" %} {% block content %}
+<section class="container">
+  <div class="d-flex justify-content-between align-items-center my-3">
+    <h2 class="my-auto">Topics</h2>
+    <a href="{% url 'event_resources:create_topic' %}" class="btn btn-primary"
+      >Create New Topic</a
+    >
+  </div>
+  <div class="row w-full d-flex flex-column">
+    <div class="bg-light p-4 rounded d-flex justify-content-center">
+      {% for topic in topics %}
+      <a href="{% url 'event_resources:topic_detail' topic.pk %}"
+        >{{ topic.title }}</a
+      >
+      {% endfor %}
+    </div>
+  </div>
+</section>
 {% endblock %}

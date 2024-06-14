@@ -1,20 +1,38 @@
 {% extends "base.html" %}
 {% block content %}
-<h2>{{ topic.title }}</h2>
-<p>{{ topic.description }}</p>
-<p>Comments:</p>
-<ul>
-    {% for comment in comments %}
-    <li>{{ comment.body }} - <small>{{ comment.created_by }}</small></li>
-    {% endfor %}
-</ul>
+<div class="container mt-5">
+    <div class="card mb-4">
+        <div class="card-body">
+            <h2 class="card-title">{{ topic.title }}</h2>
+            <p class="card-text">{{ topic.description }}</p>
+        </div>
+    </div>
+    
+    <div class="mb-4">
+        <h3>Comments:</h3>
+        <ul class="list-group">
+            {% for comment in comments %}
+            <li class="list-group-item">
+                <p class="mb-1">{{ comment.body }}</p>
+                <small class="text-muted">{{ comment.created_by }}</small>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
 
-<h3>Add a comment</h3>
-<form method="post">
-    {% csrf_token %}
-    {{ comment_form.as_p }}
-    <button type="submit">Submit</button>
-</form>
-
-<a href="{% url 'event_resources:topic_list' %}">Back to Topics</a>
+    <div class="card">
+        <div class="card-body">
+            <h3 class="card-title">Add a comment</h3>
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="id_body" class="form-label">Comment</label>
+                    <textarea id="id_body" name="body" class="form-control" rows="4" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <a href="{% url 'event_resources:topic_list' %}" class="btn btn-secondary">Back to Topics</a>
+            </form>
+        </div>
+    </div>
+</div>
 {% endblock %}

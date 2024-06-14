@@ -234,13 +234,13 @@ def upload_document(request):
 
 # Discussion
 
-@login_required
+# @login_required
 def topic_list(request):
     topics = Topic.objects.all()
     return render(request, 'forum/topic_list.html', {'topics': topics})
 
 
-@login_required
+# @login_required
 def topic_detail(request, pk):
     topic = get_object_or_404(Topic, pk=pk)
     comments = topic.comments.all()
@@ -257,7 +257,7 @@ def topic_detail(request, pk):
     return render(request, 'forum/topic_detail.html', {'topic': topic, 'comments': comments, 'comment_form': comment_form})
 
 
-@login_required
+# @login_required
 def create_topic(request):
     if request.method == 'POST':
         form = TopicForm(request.POST)
