@@ -37,4 +37,4 @@ def login_view(request):
 
 def user_logout(request):
     logout(request)
-    return redirect('accounts:homepage')
+    return redirect('event_resources:homepage')

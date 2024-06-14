@@ -3,7 +3,7 @@ from .models import Event, Resource, Ministry
 from .models import Event, Resource, Group, Ministry, Membership, Announcement, DiscussionForum, UserProfile
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-from .models import UserProfile, Document
+from .models import UserProfile, Document, Topic, Comment
 
 
 class EventForm(forms.ModelForm):
@@ -79,3 +79,15 @@ class DocumentForm(forms.ModelForm):
             'thumbnail': forms.FileInput(attrs={'class': 'form-control-file'}),
             'category': forms.Select(attrs={'class': 'form-control'}),
         }
+
+
+class TopicForm(forms.ModelForm):
+    class Meta:
+        model = Topic
+        fields = ['title', 'description']
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['body']

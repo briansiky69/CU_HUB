@@ -10,8 +10,8 @@ from django.contrib.auth.models import Group
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from .models import Event, Resource, Group, Ministry,Announcement, DiscussionForum, Sermon, ResourceCategory, Document
-from .forms import EventForm, DocumentForm
+from .models import Event, Resource, Group, Ministry,Announcement, DiscussionForum, Sermon, ResourceCategory, Document, Topic, Comment
+from .forms import EventForm, DocumentForm, TopicForm, CommentForm
 
 
 def homepage(request):
@@ -230,3 +230,42 @@ def upload_document(request):
     else:
         form = DocumentForm()
     return render(request, 'upload_document.html', {'form': form})
+
+
+# Discussion
+
+@login_required
+def topic_list(request):
+    topics = Topic.objects.all()
+    return render(request, 'forum/topic_list.html', {'topics': topics})
+
+
+@login_required
+def topic_detail(request, pk):
+    topic = get_object_or_404(Topic, pk=pk)
+    comments = topic.comments.all()
+    if request.method == 'POST':
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment = comment_form.save(commit=False)
+            comment.topic = topic
+            comment.created_by = request.user
+            comment.save()
+            return redirect('topic_detail', pk=topic.pk)
+    else:
+        comment_form = CommentForm()
+    return render(request, 'forum/topic_detail.html', {'topic': topic, 'comments': comments, 'comment_form': comment_form})
+
+
+@login_required
+def create_topic(request):
+    if request.method == 'POST':
+        form = TopicForm(request.POST)
+        if form.is_valid():
+            topic = form.save(commit=False)
+            topic.created_by = request.user
+            topic.save()
+            return redirect('topic_list')
+    else:
+        form = TopicForm()
+    return render(request, 'forum/create_topic.html', {'form': form})

@@ -9,7 +9,6 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    # path('', views.index, name='homepage'),
     path('', views.homepage, name='homepage'),
     path('edit/', views.edit_event, name='edit'),
     path('contacts/', views.contacts, name='contact'),
@@ -24,6 +23,9 @@ urlpatterns = [
     path('e-library/', views.document_list, name='document_list'),
     path('e-library/upload/document/', views.upload_document, name='upload_document'),
     path('logout/', views.logout_view, name='user-logout'),
+    path('forum/topics/', views.topic_list, name='topic_list'),
+    path('forum/topic/<int:pk>/', views.topic_detail, name='topic_detail'),
+    path('forum/topic/new/', views.create_topic, name='create_topic'),
 ]
 
 if settings.DEBUG:

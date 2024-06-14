@@ -1,7 +1,9 @@
 body {
   background: rgb(216, 211, 229);
+  color: black !important;
 }
-.my-card:hover{
+
+/* .my-card:hover{
     transform: scale(1.1);
     transition: 0.2s ease-in-out;
 }
@@ -49,7 +51,7 @@ body {
     width: 100%;
     height: auto;
     object-fit: cover;
-  }
+  } */
   
   @media (max-width: 767.98px) {
     .about-section {

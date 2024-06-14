@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>{{ topic.title }}</h2>
+<p>{{ topic.description }}</p>
+<p>Comments:</p>
+<ul>
+    {% for comment in comments %}
+    <li>{{ comment.body }} - <small>{{ comment.created_by }}</small></li>
+    {% endfor %}
+</ul>
+
+<h3>Add a comment</h3>
+<form method="post">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <button type="submit">Submit</button>
+</form>
+
+<a href="{% url 'event_resources:topic_list' %}">Back to Topics</a>
+{% endblock %}

@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django.utils.translation import gettext_lazy as _
+from accounts.models import CustomUser
 
 class Event(models.Model):
     name = models.CharField(max_length=128)
@@ -133,3 +134,24 @@ class Document(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Topic(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    created_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='topics')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
+
+
+class Comment(models.Model):
+    topic = models.ForeignKey(
+        Topic, on_delete=models.CASCADE, related_name='comments')
+    body = models.TextField()
+    created_by = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='comments')
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.body[:20]
